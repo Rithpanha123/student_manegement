@@ -436,62 +436,7 @@ span{
 }
 .user-menu:hover .user-caret{ transform: rotate(180deg); }
 
-/* =========================================================
-   7. MAIN CONTENT
-   ========================================================= */
-.main{
-  padding: 28px 24px 40px;
-  opacity:0;
-  animation: fadeIn 0.8s ease-out 0.4s both;
-}
 
-.stat-grid{
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-.stat-card{
-  background:#fff;
-  border: 1px solid var(--card-line);
-  border-radius: 12px;
-  padding: 18px 18px;
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-.stat-card:hover{ transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74,11,13,0.08); }
-.stat-card .label{ font-size:.72rem; color: var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
-.stat-card .value{ font-family: var(--font-en-display); font-size:1.9rem; font-weight:600; color: var(--ink); }
-.stat-card .delta{ font-size:.76rem; color:#3F7A4B; margin-top:4px; }
-
-.card-head{
-  display:flex; align-items:baseline; justify-content:space-between;
-  margin-bottom: 14px;
-  flex-wrap:wrap; gap:8px;
-}
-.card-head h2{
-  font-family: var(--font-en-display);
-  font-weight:600;
-  font-size:1.3rem;
-  color: var(--ink);
-}
-.card-head .sub{ font-size:.8rem; color: var(--ink-soft); }
-
-.schedule-card{
-  background:#fff;
-  border: 1px solid var(--card-line);
-  border-radius: 12px;
-  padding: 20px 20px 16px;
-  margin-bottom: 20px;
-}
-
-.placeholder-card{
-  border: 1px dashed #DCC79A;
-  border-radius: 12px;
-  padding: 40px 24px;
-  text-align:center;
-  color: var(--ink-soft);
-  font-size:.9rem;
-}
 
 /* =========================================================
    8. MOBILE DRAWER

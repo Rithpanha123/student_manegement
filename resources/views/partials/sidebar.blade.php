@@ -1,22 +1,13 @@
 <!DOCTYPE html>
-<html lang="km">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ផ្ទាំងគ្រប់គ្រង — Bour Kry University</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+Khmer:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="{{ asset('css/style_dashboard.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-
-<div class="overlay" id="overlay"></div>
-
-<div class="app">
-
-  <!-- ================= SIDEBAR ================= -->
+    <!-- ================= SIDEBAR ================= -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-logo">
@@ -151,21 +142,6 @@
 
       <div class="nav-group">
         <div class="nav-group-label">Account</div>
-
-        <!-- <div class="nav-dropdown menu-item" data-delay="10">
-          <a class="nav-link nav-toggle" href="#" data-target="account-dropdown">
-            <i class="fas fa-cog"></i>
-            <span>Settings</span>
-            <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
-          </a>
-          <div class="dropdown-content" id="account-dropdown">
-            <a href="#" class="dropdown-item"><i class="fas fa-user dropdown-icon"></i><span>Profile</span></a>
-            <a href="#" class="dropdown-item"><i class="fas fa-lock dropdown-icon"></i><span>Security</span></a>
-            <a href="#" class="dropdown-item"><i class="fas fa-palette dropdown-icon"></i><span>Appearance</span></a>
-            <a href="#" class="dropdown-item"><i class="fas fa-bell dropdown-icon"></i><span>Notifications</span></a>
-          </div>
-        </div> -->
-
         <a class="nav-link menu-item" data-delay="11" href="#">
           <i class="fas fa-sign-out-alt"></i>
           <span>Sign out</span>
@@ -176,79 +152,5 @@
 
    
   </aside>
-
-  <!-- ================= NAVBAR + MAIN ================= -->
-  <div class="content-col">
-    <header class="navbar">
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <div class="page-title">
-        <span class="en">wellcome</span>
-        <span class="km">ផ្ទាំងគ្រប់គ្រង កាលវិភាគសិក្សា</span>
-      </div>
-
-      <div class="navbar-search">
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="ស្វែងរក...">
-      </div>
-
-      <button class="icon-btn">
-        <i class="fas fa-bell"></i>
-        <span class="dot"></span>
-      </button>
-
-      <div class="navbar-divider"></div>
-
-      <button class="user-menu">
-        <span class="user-avatar">SD</span>
-        <span class="user-info">
-          <span class="user-name">Sok Dara</span>
-          <span class="user-role">Student · Year 3</span>
-        </span>
-        <i class="fas fa-chevron-down user-caret"></i>
-      </button>
-    </header>
-
-    <main class="main">
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="label">Courses</div>
-          <div class="value">7</div>
-          <div class="delta">+1 this term</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Attendance</div>
-          <div class="value">96%</div>
-          <div class="delta">+2% this month</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">GPA</div>
-          <div class="value">3.7</div>
-          <div class="delta">stable</div>
-        </div>
-        <div class="stat-card">
-          <div class="label">Pending Bills</div>
-          <div class="value">1</div>
-          <div class="delta">due Aug 20</div>
-        </div>
-      </div>
-
-      <div class="schedule-card">
-        <div class="card-head">
-          <h2>This Week</h2>
-          <span class="sub">Aug 4 – Aug 8, 2026</span>
-        </div>
-        <div class="placeholder-card">
-          <i class="fas fa-calendar-week" style="font-size:1.6rem; margin-bottom:8px; display:block;"></i>
-          Timetable content goes here
-        </div>
-      </div>
-    </main>
-  </div>
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
