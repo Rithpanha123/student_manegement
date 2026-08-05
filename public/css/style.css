@@ -1,0 +1,398 @@
+/* =========================================================
+     TABLE OF CONTENTS
+     1. Tokens (:root)          — colors, fonts, single source of truth
+     2. Reset & base            — *, html/body, reduced-motion
+     3. Layout shell            — .stage
+     4. Left panel (identity)   — .panel, .rays, .seal-halo, .motto
+     5. Right panel (form)      — .form-side, h1, .field, input, button
+     6. Responsive              — 860 / 600 / 380 / landscape
+     Edit only inside :root to re-theme; every color/font below
+     reads from a variable, nothing is hard-coded twice.
+     ========================================================= */
+
+  :root{
+    /* ---- token system ---- */
+    --maroon-deep:   #4A1010;
+    --maroon-mid:    #6B1A1A;
+    --maroon-line:   #8C2A22;
+    --gold-royal:    #C89B3C;
+    --gold-bright:   #EFC466;
+    --gold-pale:     #F3DFA6;
+    --parchment:     #FBF4E4;
+    --parchment-dim: #F1E6CC;
+    --ink:           #2A1B10;
+    --ink-soft:      #6B5A45;
+    --danger:        #9A2B2B;
+
+    --font-khmer-display: 'Khmer Viravuth', 'Noto Serif Khmer', serif;
+    --font-en-display: 'Cormorant Garamond', serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+
+  body{
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--parchment-dim);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 28px;
+  }
+
+  /* respect reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  .stage{
+    width:100%;
+    max-width: 1040px;
+    min-height: 620px;
+    display:grid;
+    grid-template-columns: 1.05fr 1fr;
+    background: var(--parchment);
+    border-radius: 18px;
+    overflow:hidden;
+    box-shadow: 0 30px 70px -25px rgba(42,27,16,0.45), 0 2px 0 rgba(255,255,255,0.6) inset;
+  }
+
+  /* =========================================================
+     LEFT — ceremonial panel
+     ========================================================= */
+  .panel{
+    position:relative;
+    background:
+      radial-gradient(120% 90% at 50% 8%, rgba(239,196,102,0.16), transparent 55%),
+      linear-gradient(165deg, var(--maroon-mid) 0%, var(--maroon-deep) 62%, #360b0b 100%);
+    color: var(--parchment);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 56px 44px;
+    overflow:hidden;
+  }
+
+  /* signature element: radiating rays behind the seal, echoing the
+     fountain-of-light emblem at the centre of the university crest */
+  .rays{
+    position:absolute;
+    top:50%; left:50%;
+    width: 900px; height:900px;
+    transform: translate(-50%,-58%);
+    background: repeating-conic-gradient(
+      from 0deg,
+      rgba(239,196,102,0.10) 0deg 3deg,
+      transparent 3deg 9deg
+    );
+    -webkit-mask-image: radial-gradient(circle at center, black 8%, transparent 46%);
+            mask-image: radial-gradient(circle at center, black 8%, transparent 46%);
+    animation: spin 90s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes spin{ to{ transform: translate(-50%,-58%) rotate(360deg); } }
+
+  .panel-inner{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; }
+
+  .seal-halo{
+    position:relative;
+    width: 176px; height:176px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom: 26px;
+  }
+  .seal-halo::before{
+    content:"";
+    position:absolute; inset:-14px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(239,196,102,0.35) 0%, rgba(239,196,102,0) 68%);
+    filter: blur(2px);
+  }
+  .seal-halo img{
+    position:relative;
+    width: 176px; height:176px;
+    object-fit:contain;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.45));
+  }
+
+  .uni-name-km{
+    font-family: var(--font-khmer-display);
+    font-weight:700;
+    font-size: 1.32rem;
+    line-height:1.5;
+    color: var(--gold-pale);
+    margin-bottom: 6px;
+  }
+  .uni-name-en{
+    font-family: var(--font-en-display);
+    font-weight:600;
+    font-style:italic;
+    letter-spacing:.02em;
+    font-size: 1.02rem;
+    color: var(--parchment);
+    opacity:.92;
+    margin-bottom: 22px;
+  }
+
+  .motto{
+    font-family: var(--font-khmer-display);
+    font-size: .92rem;
+    color: var(--gold-bright);
+    letter-spacing:.03em;
+    padding-top: 20px;
+    margin-top: 22px;
+    position:relative;
+  }
+  .motto::before{
+    content:"";
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width: 64px; height:2px;
+    background: linear-gradient(90deg, transparent, var(--gold-royal), transparent);
+  }
+  .motto span{ display:block; font-family:var(--font-body); font-size:.66rem; letter-spacing:.22em; text-transform:uppercase; color: rgba(251,244,228,0.55); margin-top:5px; }
+
+  /* flame-scallop border strip, referencing the ring pattern on the crest */
+  .flame-border{
+    position:absolute; top:0; bottom:0; right:0;
+    width: 14px;
+    background-image: radial-gradient(circle at 7px 12px, var(--gold-royal) 0 5px, transparent 6px);
+    background-size: 14px 24px;
+    background-repeat: repeat-y;
+    opacity:.55;
+  }
+
+  /* =========================================================
+     RIGHT — sign-in form
+     ========================================================= */
+  .form-side{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding: 56px 60px;
+  }
+
+  .form-eyebrow{
+    font-size:.7rem;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color: var(--ink-soft);
+    margin-bottom:10px;
+  }
+
+  h1{
+    font-family: var(--font-en-display);
+    font-weight:600;
+    font-size: 2.5rem;
+    color: var(--ink);
+    line-height:1.05;
+    margin-bottom: 6px;
+  }
+  .khmer-sub{
+    font-family: var(--font-khmer-display);
+    font-size: 1.05rem;
+    color: var(--maroon-mid);
+    font-weight:500;
+    margin-bottom: 30px;
+  }
+
+  form{ display:flex; flex-direction:column; gap: 18px; }
+
+  .field{ display:flex; flex-direction:column; gap:7px; }
+  .field label{
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color: var(--ink-soft);
+  }
+  .field label .km{
+    font-family: var(--font-khmer-display);
+    text-transform:none;
+    letter-spacing:0;
+    font-weight:400;
+    color: var(--ink-soft);
+    margin-left:6px;
+    font-size:.78rem;
+  }
+
+  .input-wrap{ position:relative; }
+  .input-wrap svg{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    width:17px; height:17px; stroke: var(--maroon-mid); opacity:.65;
+  }
+  input[type="text"], input[type="password"]{
+    width:100%;
+    font-family: var(--font-body);
+    font-size:.95rem;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid #E4D6B8;
+    border-radius: 9px;
+    padding: 13px 14px 13px 42px;
+    outline:none;
+    transition: border-color .18s ease, box-shadow .18s ease;
+  }
+  input::placeholder{ color:#B7A889; }
+  input:focus{
+    border-color: var(--gold-royal);
+    box-shadow: 0 0 0 4px rgba(200,155,60,0.18);
+  }
+  input:focus-visible{
+    outline: 2px solid var(--maroon-mid);
+    outline-offset:2px;
+  }
+
+  .toggle-pass{
+    position:absolute; right:12px; top:50%; transform:translateY(-50%);
+    background:none; border:none; cursor:pointer;
+    font-size:.72rem; font-weight:600; color: var(--maroon-mid);
+    letter-spacing:.03em;
+    padding:4px 6px;
+  }
+  .toggle-pass:focus-visible{ outline:2px solid var(--maroon-mid); outline-offset:2px; border-radius:4px; }
+
+  .row-between{
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:.82rem;
+    margin-top:2px;
+  }
+  .remember{ display:flex; align-items:center; gap:8px; color: var(--ink-soft); }
+  .remember input{ width:15px; height:15px; accent-color: var(--maroon-mid); }
+  .forgot{ color: var(--maroon-mid); text-decoration:none; font-weight:600; }
+  .forgot:hover{ text-decoration:underline; }
+  .forgot:focus-visible{ outline:2px solid var(--maroon-mid); outline-offset:3px; border-radius:3px; }
+
+  .btn-signin{
+    margin-top: 8px;
+    width:100%;
+    border:none;
+    cursor:pointer;
+    padding: 14px 18px;
+    border-radius: 9px;
+    font-family: var(--font-body);
+    font-weight:600;
+    font-size:.95rem;
+    letter-spacing:.02em;
+    color: var(--parchment);
+    background: linear-gradient(180deg, var(--maroon-mid), var(--maroon-deep));
+    box-shadow: 0 10px 22px -10px rgba(74,16,16,0.65), inset 0 1px 0 rgba(255,255,255,0.12);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  }
+  .btn-signin:hover{ filter:brightness(1.08); transform: translateY(-1px); box-shadow: 0 14px 26px -10px rgba(74,16,16,0.7); }
+  .btn-signin:active{ transform: translateY(0); }
+  .btn-signin:focus-visible{ outline:2px solid var(--gold-royal); outline-offset:3px; }
+  .btn-signin svg{ width:16px; height:16px; }
+
+  .divider{
+    display:flex; align-items:center; gap:12px;
+    color: var(--ink-soft); font-size:.72rem; text-transform:uppercase; letter-spacing:.14em;
+    margin: 4px 0 2px;
+  }
+  .divider::before, .divider::after{ content:""; flex:1; height:1px; background: #E4D6B8; }
+
+  .helper{
+    text-align:center;
+    font-size:.85rem;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+  .helper a{ color: var(--maroon-mid); font-weight:600; text-decoration:none; }
+  .helper a:hover{ text-decoration:underline; }
+
+  .foot-note{
+    margin-top: 34px;
+    text-align:center;
+    font-size:.72rem;
+    color: #B7A889;
+    letter-spacing:.03em;
+  }
+
+  /* =========================================================
+     Responsive
+     Breakpoints: 860 tablet · 600 large phone · 380 small phone
+     Mobile changes: stack panels, shrink the seal + rays so the
+     ceremonial panel reads as a header instead of half the screen,
+     tighten spacing, and keep every tap target ≥ 44px.
+     ========================================================= */
+
+  /* ---- tablet: stack the two panels, panel becomes a header ---- */
+  @media (max-width: 860px){
+    body{ padding: 20px; align-items:flex-start; }
+    .stage{
+      grid-template-columns: 1fr;
+      max-width: 460px;
+      min-height: 0;
+      margin: 0 auto;
+    }
+    .panel{ padding: 36px 30px 30px; }
+    .rays{ width:600px; height:600px; }
+    .seal-halo{ width:120px; height:120px; margin-bottom:18px; }
+    .seal-halo img{ width:120px; height:120px; }
+    .uni-name-km{ font-size:1.12rem; }
+    .uni-name-en{ font-size:.9rem; }
+    .motto{ font-size:.82rem; padding-top:16px; margin-top:16px; }
+    .flame-border{ display:none; }     /* thin rule reads as a stray line once panels stack */
+    .form-side{ padding: 36px 32px 40px; }
+    h1{ font-size:2.05rem; }
+  }
+
+  /* ---- large phone ---- */
+  @media (max-width: 600px){
+    .stage{ border-radius: 14px; max-width: 100%; }
+    .panel{ padding: 30px 24px 26px; }
+    .rays{ width:440px; height:440px; }
+    .seal-halo{ width:100px; height:100px; margin-bottom:14px; }
+    .seal-halo img{ width:100px; height:100px; }
+    .uni-name-km{ font-size:1.02rem; line-height:1.4; }
+    .uni-name-en{ font-size:.82rem; margin-bottom:16px; }
+    .motto{ font-size:.76rem; }
+    .motto span{ font-size:.6rem; letter-spacing:.16em; }
+
+    .form-side{ padding: 30px 22px 34px; gap:0; }
+    .form-eyebrow{ font-size:.66rem; }
+    h1{ font-size:1.8rem; }
+    .khmer-sub{ font-size:.94rem; margin-bottom:22px; }
+    form{ gap:15px; }
+
+    /* full-width tap targets, comfortable thumb spacing */
+    input[type="text"], input[type="password"]{ padding:13px 14px 13px 40px; font-size:16px; } /* 16px min avoids iOS auto-zoom on focus */
+    .btn-signin{ padding:14px 16px; font-size:.94rem; }
+    .row-between{ flex-wrap: wrap; gap:10px; }
+    .remember, .forgot{ font-size:.8rem; }
+  }
+
+  /* ---- small phone ---- */
+  @media (max-width: 380px){
+    body{ padding: 0; }
+    .stage{ border-radius: 0; box-shadow:none; }
+    .panel{ padding: 26px 18px 22px; }
+    .rays{ width:340px; height:340px; }
+    .seal-halo{ width:84px; height:84px; margin-bottom:12px; }
+    .seal-halo img{ width:84px; height:84px; }
+    .uni-name-km{ font-size:.92rem; }
+    .uni-name-en{ font-size:.74rem; }
+    .form-side{ padding: 26px 18px 30px; }
+    h1{ font-size:1.6rem; }
+    .foot-note{ margin-top:24px; }
+  }
+
+  /* ---- landscape phones: the stacked layout gets too tall, so
+     go back to a compact side-by-side instead of a long scroll ---- */
+  @media (max-height: 480px) and (orientation: landscape){
+    body{ align-items:center; }
+    .stage{ grid-template-columns: .8fr 1fr; max-width: 760px; }
+    .panel{ padding: 22px; }
+    .rays{ width:420px; height:420px; }
+    .seal-halo{ width:78px; height:78px; margin-bottom:10px; }
+    .seal-halo img{ width:78px; height:78px; }
+    .motto{ display:none; }            /* first thing to drop when height is tight */
+    .form-side{ padding: 22px 30px; }
+    h1{ font-size:1.6rem; margin-bottom:2px; }
+    .khmer-sub{ margin-bottom:14px; }
+    form{ gap:12px; }
+  }
