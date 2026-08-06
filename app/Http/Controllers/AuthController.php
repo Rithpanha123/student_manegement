@@ -9,10 +9,31 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    // public function index()
+    // {
+    //     return view('auth.login');
+    // }
+
     public function index()
     {
-        return view('auth.login');
+        $seconds = 0;
+
+        // Check Session lockout_until when User Refresh Page (GET Request)
+        if (session()->has('lockout_until')) {
+            $remaining = session('lockout_until') - time();
+
+            if ($remaining > 0) {
+                $seconds = $remaining;
+            } else {
+                // if end of time delete session 
+                session()->forget(['lockout_until', 'lockout_seconds']);
+            }
+        }
+
+        return view('auth.login', compact('seconds'));
     }
+
+
 
     public function login(Request $request)
     {
@@ -57,7 +78,7 @@ class AuthController extends Controller
         ])->onlyInput('username');
     }
 
-    // Method សម្រាប់ធ្វើបច្ចុប្បន្នភាព session
+    // Method for update session
     public function updateLockoutSession(Request $request)
     {
         $seconds = $request->input('seconds');

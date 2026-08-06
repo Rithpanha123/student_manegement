@@ -232,5 +232,86 @@ toggle.addEventListener('click', function () {
 });
 </script>
 
+<!-- COUNTDOWN -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // retrive remind time and calculate in Controller
+    let seconds = {{ $seconds ?? session('lockout_seconds') ?? 0 }};
+
+    if (seconds <= 0) {
+        return;
+    }
+
+    // close Sign In button
+    const submitBtn = document.querySelector('.btn-signin');
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    let timerInterval;
+
+    Swal.fire({
+        icon: 'error',
+        title: 'Too Many Login Attempts',
+        html: 'Please try again in <b id="swal-countdown" style="color: #7b1e1e;">' + seconds + '</b> seconds.',
+        timer: seconds * 1000,
+        timerProgressBar: true,
+        showConfirmButton: true,     
+        confirmButtonText: 'OK',     
+        confirmButtonColor: '#7b1e1e', 
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            const countdownEl = document.getElementById('swal-countdown');
+            const confirmBtn = Swal.getConfirmButton();
+
+            // When start close button ok untill the end of time
+            if (confirmBtn) {
+                confirmBtn.disabled = true;
+                confirmBtn.style.opacity = '0.6';
+                confirmBtn.style.cursor = 'not-allowed';
+            }
+            
+            timerInterval = setInterval(() => {
+                seconds--;
+                if (countdownEl && seconds >= 0) {
+                    countdownEl.textContent = seconds;
+                }
+
+                // coldown until 0s to open butoon OK 
+                if (seconds <= 0 && confirmBtn) {
+                    confirmBtn.disabled = false;
+                    confirmBtn.style.opacity = '1';
+                    confirmBtn.style.cursor = 'pointer';
+                }
+            }, 1000);
+        },
+        willClose: () => {
+            clearInterval(timerInterval);
+        }
+    }).then((result) => {
+        // coldown 0s and  close swal alert
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+        }
+
+        // send AJAX to Server for clear session
+        fetch('/update-lockout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ seconds: 0 })
+        }).catch(err => console.error(err));
+    });
+});
+</script>
+
 </body>
 </html>
