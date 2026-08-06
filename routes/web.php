@@ -14,7 +14,13 @@ Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard.index')->name('dashboard');
 
     // Students
-    Route::view('/students', 'students.index')->name('students');
+     Route::view('/students', 'students.index')->name('students');
+
+    // Route::get('/students/transfer', [StudentTransferController::class, 'create'])
+    //     ->name('students.transfer');
+
+    // Route::post('/students/transfer', [StudentTransferController::class, 'store'])
+    //     ->name('students.transfer.store');
 
     // Classes
     Route::view('/classes', 'classes.index')->name('classes');

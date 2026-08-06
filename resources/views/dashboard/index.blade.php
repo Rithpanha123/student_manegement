@@ -4,6 +4,6 @@
 
 @section('content')
 
-<h1>Dashboard1</h1>
+<h1>Dashboard1Dashboard1Dashboard1Dashboard1Dashboard1Dashboard1</h1>
 
 @endsection

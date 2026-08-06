@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <!-- ================= SIDEBAR ================= -->
+   <!-- ================= SIDEBAR ================= -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-logo">
@@ -58,7 +49,7 @@
           </a>
           <div class="dropdown-content" id="Student-dropdown">
             <a href="#" class="dropdown-item"><i class="fas fa-user-plus dropdown-icon"></i><span>បញ្ចូលឈ្មោះសិស្សថ្មី</span></a>
-            <a href="#" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
+            <a href="{{ route('students') }}" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-user-times dropdown-icon"></i><span>បញ្ចីសិស្សឈប់</span></a>
           </div>
         </div>
@@ -149,8 +140,4 @@
       </div>
       
     </nav>
-
-   
   </aside>
-</body>
-</html>

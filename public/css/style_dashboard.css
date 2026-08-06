@@ -305,7 +305,6 @@ span{
   position:sticky;
   top:0;
   z-index: 20;
-
   opacity:0;
   animation: navbarSlideDown 0.7s ease-out 0.15s both;
 }
@@ -435,8 +434,15 @@ span{
   animation: fadeIn 0.5s ease-out 1s both;
 }
 .user-menu:hover .user-caret{ transform: rotate(180deg); }
+/* =========================================================
+   8. main DRAWER
+   ========================================================= */
 
-
+  .content-main
+  {
+    margin-top: 25px;
+    margin-left: 25px;
+  }
 
 /* =========================================================
    8. MOBILE DRAWER
@@ -542,7 +548,16 @@ span{
   .navbar{ padding: 0 14px; gap:10px; }
   .user-info{ display:none; }
   .user-caret{ display:none; }
-  .main{ padding: 18px 14px 30px; }
+  /* =========================================================
+   7. MAIN CONTENT
+   ========================================================= */
+.main{
+  flex: 1;
+  min-width: 0;
+  padding: 28px 32px 40px;
+  margin-left: 100px;
+  overflow-x: hidden;
+}
   .stat-grid{ grid-template-columns: 1fr 1fr; gap:12px; }
   .stat-card{ padding:14px; }
   .stat-card .value{ font-size:1.5rem; }
