@@ -7,19 +7,20 @@
             font-family: 'Kh Battambang', Courier, monospace
         }
         .form-wrapper {
-            max-width: 1600px;
+            max-width: 100%;
             width: 100%;
             background: white;
-            border-radius: 28px;
+            border-radius: 5px;
             box-shadow: 0 20px 40px rgba(0, 20, 40, 0.08), 0 8px 20px rgba(0, 0, 0, 0.02);
             padding: 30px 35px 40px;
             transition: 0.2s;
+            margin-right: 20px;
         }
 
         /* ----- typography & titles ----- */
         .form-title {
-            font-size: 1.9rem;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 20px;
             color: #0b2a4a;
             letter-spacing: -0.3px;
             margin-top: 4px;
@@ -48,7 +49,7 @@
             font-weight: 500;
             color: #1a3857;
             border: 1px solid #d7e4ee;
-            font-size: 1.05rem;
+            font-size: 15px;
         }
 
         .checkbox-line input[type="checkbox"] {
@@ -75,7 +76,7 @@
 
         legend {
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 15px;
             padding: 0 14px;
             color: #15466a;
             letter-spacing: -0.2px;
@@ -140,7 +141,7 @@
             border: 1px solid #b8cee7;
             border-radius: 60px;
             padding: 8px 16px;
-            font-size: 0.9rem;
+            font-size: 12px;
             font-weight: 500;
             color: #1a4a78;
             cursor: pointer;
@@ -162,17 +163,52 @@
             display: none;
         }
 
-        .photo-status {
-            font-size: 0.75rem;
-            color: #7a8ea0;
-            background: #ecf3fa;
-            padding: 4px 12px;
-            border-radius: 30px;
-            max-width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+       .photo-status {
+    font-size: 0.75rem;
+    color: #7a8ea0;
+    background: #ecf3fa;
+    padding: 4px 12px;
+    border-radius: 30px;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 8px;
+}
+
+/* សម្រាប់រូបភាព preview ឱ្យសមនឹងប្រអប់ */
+.photo-preview {
+    width: 100px;
+    height: auto;
+    max-height: 180px;
+    object-fit: contain; /* ឬប្រើ 'cover' ប្រសិនបើចង់បំពេញ */
+    border-radius: 12px;
+    margin-top: 8px;
+    border: 2px solid #d7e2ef;
+    background: #f5faff;
+    transition: 0.2s;
+}
+
+.photo-preview:hover {
+    transform: scale(1.02);
+    border-color: #1f6fcf;
+}
+
+/* ធ្វើឱ្យប្រអប់រូបភាពមានទំហំសមរម្យ */
+.photo-box {
+    flex: 1 1 180px;
+    background: #f5faff;
+    border-radius: 20px;
+    padding: 16px 14px 18px;
+    border: 1px dashed #bcd2e9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: 0.15s;
+    min-width: 150px;
+    min-height: 250px; /* កំណត់កម្ពស់អប្បបរមា */
+}
 
         /* ----- grids ----- */
         .field-grid {
@@ -229,12 +265,14 @@
             border: 1.5px solid #d7e2ef;
             border-radius: 16px;
             padding: 12px 16px;
-            font-size: 0.95rem;
+           
             font-family: inherit;
             transition: 0.12s;
             color: #162b42;
             width: 100%;
             outline: none;
+            height: 45px;
+            font-size: 12px;
         }
 
         .field input:focus,
@@ -623,12 +661,50 @@
         input.addEventListener('change', function () {
             var wrapper = input.closest('.photo-box');
             var status = wrapper.querySelector('.photo-status');
+            
             if (input.files && input.files.length > 0) {
-                status.textContent = input.files[0].name;
+                var file = input.files[0];
+                
+                // ពិនិត្យទំហំឯកសារ (មិនធំជាង 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('ទំហំឯកសារធំពេក! សូមជ្រើសរើសរូបភាពដែលមានទំហំមិនធំជាង 5MB');
+                    input.value = ''; // លុបឯកសារដែលបានជ្រើស
+                    return;
+                }
+                
+                // បង្ហាញឈ្មោះឯកសារ
+                status.textContent = file.name;
                 status.style.color = '#2f6fd6';
+                status.style.background = '#dff0ff';
+                
+                // បង្ហាញរូបភាពជា preview
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // ពិនិត្យមើលថាតើមាន img រួចហើយឬនៅ
+                    var existingImg = wrapper.querySelector('.photo-preview');
+                    if (existingImg) {
+                        existingImg.src = e.target.result;
+                    } else {
+                        // បង្កើត img element ថ្មី
+                        var img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = 'Preview';
+                        img.className = 'photo-preview';
+                        
+                        // បញ្ចូល img មុន status
+                        wrapper.insertBefore(img, status);
+                    }
+                };
+                reader.readAsDataURL(file);
             } else {
+                // ប្រសិនបើគ្មានឯកសារ លុប preview ចេញ
+                var existingImg = wrapper.querySelector('.photo-preview');
+                if (existingImg) {
+                    existingImg.remove();
+                }
                 status.textContent = 'មិនទាន់ត្រូវបានបញ្ចូលរូបភាព';
-                status.style.color = '#999';
+                status.style.color = '#7a8ea0';
+                status.style.background = '#ecf3fa';
             }
         });
     });

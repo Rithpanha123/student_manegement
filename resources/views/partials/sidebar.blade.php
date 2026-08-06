@@ -15,7 +15,7 @@
       <div class="nav-group">
         <div class="nav-group-label">Main</div>
 
-        <a class="nav-link  menu-item" data-delay="1" href="#"> <!-- active -->
+        <a class="nav-link  menu-item" data-delay="1" href="{{ route('dashboard') }}" class="dropdown-item"> <!-- active -->
           <i class="fas fa-th-large"></i>
           <span>Dashboard</span>
         </a>
@@ -63,7 +63,7 @@
             <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
           </a>
           <div class="dropdown-content" id="Staff-dropdown">
-            <a href="#" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
+            <a href="#"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-calendar-alt dropdown-icon"></i><span>បញ្ជីតាមឆ្នាំសិក្សា</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-user-slash dropdown-icon"></i><span>បញ្ចីសិស្សឈប់</span></a>
           </div>
