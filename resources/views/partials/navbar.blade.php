@@ -20,7 +20,7 @@
 
     <div class="navbar-divider"></div>
 
-    <button class="user-menu">
+    <!-- <button class="user-menu">
         <span class="user-avatar">SD</span>
 
         <span class="user-info">
@@ -29,5 +29,35 @@
         </span>
 
         <i class="fas fa-chevron-down user-caret"></i>
-    </button>
+    </button> -->
+
+    @php
+    $user = auth()->user();
+@endphp
+
+<button class="user-menu" onclick="toggleUserDropdown()">
+    <!-- Avatar -->
+    @if($user && $user->profile_picture)
+        <img src="{{ asset('storage/' . $user->profile_picture) }}" 
+             alt="{{ $user->username }}"
+             class="user-avatar-img"
+             width="40" height="40">
+    @else
+        <span class="user-avatar">
+            {{ $user ? strtoupper(substr($user->username, 0, 2)) : 'GU' }}
+        </span>
+    @endif
+    
+    <span class="user-info">
+        <span class="user-name">{{ $user ? $user->username : 'Guest' }}</span>
+        <span class="user-role">
+            @if($user && $user->role)
+                {{ $user->role->role_name }}
+            @else
+                User
+            @endif
+        </span>
+    </span>
+    <i class="fas fa-chevron-down user-caret"></i>
+</button>
 </header>
