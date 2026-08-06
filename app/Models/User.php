@@ -32,6 +32,7 @@ class User extends Authenticatable
         'role_id',
         'is_active',
         'last_login',
+        'profile_picture',
     ];
 
     protected $hidden =[
@@ -78,5 +79,74 @@ class User extends Authenticatable
     {
         return $this->is_active 
         ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>';
+    }
+
+    /**
+     * Get user's profile picture URL or generate avatar
+     */
+    public function getAvatarUrlAttribute()
+    {
+        // ប្រសិនបើមានរូបភាពក្នុង Database
+        if ($this->profile_picture) {
+            return asset('storage/' . $this->profile_picture);
+        }
+        
+        // ប្រសិនបើគ្មានរូបភាព បង្កើត Avatar URL
+        return $this->getAvatarUrl();
+    }
+
+    /**
+     * Get avatar with first letter
+     */
+    public function getAvatarLetterAttribute()
+    {
+        // យកអក្សរដំបូងពី username
+        return strtoupper(substr($this->username, 0, 2));
+    }
+
+    /**
+     * Generate avatar URL using UI Avatars API
+     */
+    public function getAvatarUrl()
+    {
+        $name = urlencode($this->username);
+        $backgroundColor = $this->getAvatarColor();
+        
+        // ប្រើ UI Avatars API (Free)
+        return "https://ui-avatars.com/api/?name={$name}&background={$backgroundColor}&color=fff&size=128&rounded=true&bold=true";
+    }
+
+    /**
+     * Get random color for avatar based on user id
+     */
+    private function getAvatarColor()
+    {
+        $colors = [
+            '1abc9c', '2ecc71', '3498db', '9b59b6', 
+            'e67e22', 'e74c3c', '1abc9c', '2c3e50',
+            '16a085', '27ae60', '2980b9', '8e44ad',
+            'd35400', 'c0392b', '7f8c8d', '2c3e50'
+        ];
+        
+        return $colors[$this->user_id % count($colors)];
+    }
+
+    /**
+     * Get user's display name
+     */
+    public function getDisplayNameAttribute()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Get user's role display
+     */
+    public function getRoleDisplayAttribute()
+    {
+        if ($this->role) {
+            return $this->role->role_name;
+        }
+        return 'User';
     }
 }

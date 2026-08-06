@@ -43,7 +43,7 @@
             <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
           </a>
           <div class="dropdown-content" id="Class-dropdown">
-            <a href="#" class="dropdown-item"><i class="fas fa-plus-circle dropdown-icon"></i><span>បង្កើតថ្នាក់</span></a>
+            <a href="{{ route('admin.user_list')}}" class="dropdown-item"><i class="fas fa-plus-circle dropdown-icon"></i><span>បង្កើតថ្នាក់</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-list dropdown-icon"></i><span>ថ្នាក់ទាំងអស់</span></a>
           </div>
         </div>
