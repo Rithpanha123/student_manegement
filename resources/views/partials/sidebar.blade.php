@@ -48,8 +48,8 @@
             <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
           </a>
           <div class="dropdown-content" id="Student-dropdown">
-            <a href="#" class="dropdown-item"><i class="fas fa-user-plus dropdown-icon"></i><span>បញ្ចូលឈ្មោះសិស្សថ្មី</span></a>
-            <a href="{{ route('students') }}" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
+            <a href="{{ route('students') }}" class="dropdown-item"><i class="fas fa-user-plus dropdown-icon"></i><span>បញ្ចូលឈ្មោះសិស្សថ្មី</span></a>
+            <a href="#" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-user-times dropdown-icon"></i><span>បញ្ចីសិស្សឈប់</span></a>
           </div>
         </div>
@@ -63,7 +63,7 @@
             <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
           </a>
           <div class="dropdown-content" id="Staff-dropdown">
-            <a href="#"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
+            <a href="#" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-calendar-alt dropdown-icon"></i><span>បញ្ជីតាមឆ្នាំសិក្សា</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-user-slash dropdown-icon"></i><span>បញ្ចីសិស្សឈប់</span></a>
           </div>
@@ -133,7 +133,21 @@
 
       <div class="nav-group">
         <div class="nav-group-label">Account</div>
-        <a class="nav-link menu-item" data-delay="11" href="#">
+        <div class="nav-dropdown menu-item" data-delay="5">
+          <a class="nav-link nav-toggle" href="#" data-target="users-dropdown">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span>users</span>
+            <span class="nav-badge">new</span>
+            <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
+          </a>
+          <div class="dropdown-content" id="users-dropdown">
+            <a href="{{ route('admin.users.create') }}" class="dropdown-item"><i class="fas fa-user-plus dropdown-icon"></i><span>បញ្ចូលឈ្មោះអ្នកប្រើ</span></a>
+            <a href="{{ route('admin.users.index') }}" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីអ្នកប្រើប្រាស់</span></a>
+            <a href="#" class="dropdown-item"><i class="fas fa-calendar-alt dropdown-icon"></i><span>បញ្ជីតាមឆ្នាំសិក្សា</span></a>
+            <a href="#" class="dropdown-item"><i class="fas fa-user-slash dropdown-icon"></i><span>បញ្ចីអ្នកប្រើប្រាស់ឈប់</span></a>
+          </div>
+        </div>
+        <a class="nav-link menu-item" data-delay="11" href="{{ route('logout') }}">
           <i class="fas fa-sign-out-alt"></i>
           <span>Sign out</span>
         </a>

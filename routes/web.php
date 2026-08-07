@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 // Login
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -13,14 +14,13 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::view('/dashboard', 'dashboard.index')->name('dashboard');
 
+    // Users (Admin)
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('users', UserController::class);
+    });
+
     // Students
-     Route::view('/students', 'students.index')->name('students');
-
-    // Route::get('/students/transfer', [StudentTransferController::class, 'create'])
-    //     ->name('students.transfer');
-
-    // Route::post('/students/transfer', [StudentTransferController::class, 'store'])
-    //     ->name('students.transfer.store');
+    Route::view('/students', 'students.index')->name('students');
 
     // Classes
     Route::view('/classes', 'classes.index')->name('classes');
