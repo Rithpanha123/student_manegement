@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 // Login
 Route::get('/login', [AuthController::class, 'index'])->name('login');
@@ -12,12 +13,13 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::middleware('auth')->group(function () {
 
     // Dashboard
-    Route::view('/dashboard', 'dashboard.index')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Users (Admin)
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('users', UserController::class);
     });
+
 
     // Students
     Route::view('/students', 'students.index')->name('students');
@@ -39,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 });
 
 // Redirect Home to Login

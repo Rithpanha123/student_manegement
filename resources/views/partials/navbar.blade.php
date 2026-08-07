@@ -1,3 +1,4 @@
+<script src="https://cdn.tailwindcss.com"></script>
 <header class="navbar">
     <button class="hamburger" id="hamburger">
         <i class="fas fa-bars"></i>
@@ -13,23 +14,19 @@
         <input type="text" placeholder="ស្វែងរក...">
     </div>
 
-    <button class="icon-btn">
-        <i class="fas fa-bell"></i>
-        <span class="dot"></span>
-    </button>
+    <button class="relative p-2 rounded-full hover:bg-gray-100">
+    <i class="fas fa-bell text-xl"></i>
+
+    <!-- Notification Badge -->
+    <span
+        class="absolute -top-1 -right-2 min-w-5 h-5 px-1 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white">
+        100
+    </span>
+</button>
 
     <div class="navbar-divider"></div>
 
-    <!-- <button class="user-menu">
-        <span class="user-avatar">SD</span>
-
-        <span class="user-info">
-            <span class="user-name">Sok Dara</span>
-            <span class="user-role">Student · Year 3</span>
-        </span>
-
-        <i class="fas fa-chevron-down user-caret"></i>
-    </button> -->
+    
 
     @php
     $user = auth()->user();

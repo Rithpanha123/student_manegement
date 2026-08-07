@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('role_id')->nullable()->constrained('roles', 'role_id');
             $table->boolean('is_active')->default(true);
             $table->timestamp('last_login')->nullable();
+            $table->text('profile_picture')->nullable();
             $table->timestamps();
         });
     }

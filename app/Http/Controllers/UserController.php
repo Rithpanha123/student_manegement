@@ -10,11 +10,30 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with(['gender', 'role'])->get();
+        $search  = $request->query('search');
+        $perPage = $request->query('per_page', 10); // default 10
 
-        return view('admin.user_list', compact('users'));
+        $query = User::with(['gender', 'role'])
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('username', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
+            ->orderByDesc('created_at');
+
+        if ($perPage === 'all') {
+            // Show everything on one page (still paginate() so the view's
+            // methods like ->total(), ->firstItem() etc. keep working)
+            $total = $query->count();
+            $users = $query->paginate($total > 0 ? $total : 1)->withQueryString();
+        } else {
+            $users = $query->paginate((int) $perPage)->withQueryString();
+        }
+
+        return view('admin.user_list', compact('users', 'perPage'));
     }
 
     public function create()
