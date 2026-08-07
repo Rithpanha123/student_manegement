@@ -40,7 +40,7 @@
     @if($user && $user->profile_picture)
         <img src="{{ asset('storage/' . $user->profile_picture) }}" 
              alt="{{ $user->username }}"
-             class="user-avatar-img"
+             class="user-avatar"
              width="40" height="40">
     @else
         <span class="user-avatar">
