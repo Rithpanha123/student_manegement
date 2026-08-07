@@ -103,7 +103,16 @@
                                 <td class="px-6 py-3.5 whitespace-nowrap">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-full bg-slate-900 text-white text-xs font-semibold flex items-center justify-center shrink-0 transition-transform duration-150 hover:scale-110">
-                                            {{ strtoupper(substr($user->username, 0, 1)) }}
+                                            @if($user && $user->profile_picture)
+                                                <img src="{{ asset('storage/' . $user->profile_picture) }}" 
+                                                    alt="{{ $user->username }}"
+                                                    class="user-avatar"
+                                                    width="40" height="40">
+                                            @else
+                                                <span class="user-avatar">
+                                                    {{ $user ? strtoupper(substr($user->username, 0, 2)) : 'GU' }}
+                                                </span>
+                                            @endif
                                         </div>
                                         <div class="min-w-0">
                                             <p class="font-medium text-slate-900 truncate">{{ $user->username }}</p>
