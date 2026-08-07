@@ -1,10 +1,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Font Awesome 6 (free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Tailwind CSS (CDN build) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Tailwind CSS (CDN build) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = {
         theme: {
             extend: {
@@ -25,25 +25,36 @@
             },
         },
     };
-  </script>
-  <!-- Google Font (Inter) for a modern feel -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+</script>
+<!-- Google Font (Inter) as latin fallback -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<style>
+    @font-face {
+        font-family: 'Kh Battambang';
+        src: url('{{ asset('fonts/Kh-Battambang.ttf') }}') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    * { font-family: 'Kh Battambang', 'Inter', sans-serif; }
+    body { background-color: #f8fafc; }
     ::-webkit-scrollbar { height: 8px; width: 8px; }
     ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 9999px; }
 
     @media (prefers-reduced-motion: reduce) {
         * { animation: none !important; transition: none !important; }
     }
-  </style>
+</style>
+
 @extends('dashboard.index')
 
 @section('title', 'user_list')
 
 @section('content')
+
 <div class="">
 
     <!-- Header -->
@@ -53,11 +64,12 @@
             <p class="text-sm text-slate-500 mt-1">Manage accounts, roles, and access.</p>
         </div>
         <div class="flex items-center gap-2">
-            <div class="relative">
+            <!-- Search Form -->
+            <form method="GET" action="{{ route('admin.users.index') }}" class="relative">
                 <i class="fas fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs transition-colors peer-focus:text-slate-600"></i>
-                <input type="text" placeholder="Search users…"
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search users…"
                        class="peer pl-9 pr-3 py-2 text-sm bg-white border border-slate-200 rounded-lg w-56 placeholder:text-slate-400 outline-none transition-all duration-150 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-300 focus:w-64">
-            </div>
+            </form>
             <button class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 active:scale-95 hover:-translate-y-0.5 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
                 <i class="fas fa-plus text-xs"></i>
                 Add user
@@ -137,7 +149,7 @@
                                 <!-- Last login -->
                                 <td class="px-6 py-3.5 whitespace-nowrap text-slate-500">
                                     @if($user->last_login)
-                                        {{ $user->last_login->format('d/m/Y H:i') }}
+                                        {{ \Carbon\Carbon::parse($user->last_login)->format('d/m/Y H:i') }}
                                     @else
                                         <span class="text-slate-300">Never</span>
                                     @endif
@@ -159,7 +171,7 @@
                                            class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-amber-600 hover:bg-amber-50 hover:scale-110 active:scale-95 transition-all duration-150">
                                             <i class="fas fa-pen text-xs"></i>
                                         </a>
-                                        <form action="#" method="POST" class="delete-form">
+                                        <form action="{{ route('admin.users.destroy', $user->user_id) }}" method="POST" class="delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" title="Delete"
@@ -175,11 +187,70 @@
                 </table>
             </div>
 
-            <!-- Footer -->
-            <div class="flex items-center justify-between px-6 py-3.5 border-t border-slate-200 bg-slate-50/60">
-                <p class="text-xs text-slate-500">
-                    Showing <span class="font-medium text-slate-700">{{ $users->count() }}</span> user{{ $users->count() === 1 ? '' : 's' }}
-                </p>
+            <!-- Footer with Pagination Links -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-3.5 border-t border-slate-200 bg-slate-50/60">
+                <div class="flex items-center gap-4">
+                    <p class="text-xs text-slate-500">
+                        Showing <span class="font-medium text-slate-700">{{ $users->firstItem() ?? 0 }}</span>
+                        to <span class="font-medium text-slate-700">{{ $users->lastItem() ?? 0 }}</span>
+                        of <span class="font-medium text-slate-700">{{ $users->total() }}</span> users
+                    </p>
+
+                    <!-- Per-page selector -->
+                    <form method="GET" action="{{ route('admin.users.index') }}" class="flex items-center gap-1.5">
+                        @if(request('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+                        <label for="per_page" class="text-xs text-slate-500">Show</label>
+                        <select name="per_page" id="per_page" onchange="this.form.submit()"
+                                class="text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md px-2 py-1 outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-300 cursor-pointer">
+                            <option value="10" @selected($perPage == 10)>10</option>
+                            <option value="20" @selected($perPage == 20)>20</option>
+                            <option value="30" @selected($perPage == 30)>30</option>
+                            <option value="all" @selected($perPage === 'all')>All</option>
+                        </select>
+                    </form>
+                </div>
+
+                <div class="flex items-center gap-1">
+                    {{-- Previous Page Link --}}
+                    @if ($users->onFirstPage())
+                        <span class="px-3 py-1.5 text-xs text-slate-400 bg-slate-100 border border-slate-200 rounded-md cursor-not-allowed">
+                            Previous
+                        </span>
+                    @else
+                        <a href="{{ $users->previousPageUrl() }}"
+                           class="px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                            Previous
+                        </a>
+                    @endif
+
+                    {{-- Page Number Links --}}
+                    @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                        @if ($page == $users->currentPage())
+                            <span class="px-3 py-1.5 text-xs font-semibold text-white bg-slate-900 rounded-md">
+                                {{ $page }}
+                            </span>
+                        @else
+                            <a href="{{ $url }}"
+                               class="px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                                {{ $page }}
+                            </a>
+                        @endif
+                    @endforeach
+
+                    {{-- Next Page Link --}}
+                    @if ($users->hasMorePages())
+                        <a href="{{ $users->nextPageUrl() }}"
+                           class="px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-md hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                            Next
+                        </a>
+                    @else
+                        <span class="px-3 py-1.5 text-xs text-slate-400 bg-slate-100 border border-slate-200 rounded-md cursor-not-allowed">
+                            Next
+                        </span>
+                    @endif
+                </div>
             </div>
         @else
             <!-- Empty state -->
@@ -196,6 +267,7 @@
             </div>
         @endif
     </div>
+
 </div>
 
 <script>

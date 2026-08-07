@@ -147,7 +147,10 @@
             <a href="#" class="dropdown-item"><i class="fas fa-user-slash dropdown-icon"></i><span>បញ្ចីអ្នកប្រើប្រាស់ឈប់</span></a>
           </div>
         </div>
-        <a class="nav-link menu-item" data-delay="11" href="{{ route('logout') }}">
+        <form action="{{ route('logout') }}" method="POST" style="display: none;">
+          @csrf
+        </form>
+        <a class="nav-link menu-item" data-delay="11" href="{{ route('logout') }}" onclick="event.preventDefault(); document.querySelector('form').submit();">
           <i class="fas fa-sign-out-alt"></i>
           <span>Sign out</span>
         </a>
