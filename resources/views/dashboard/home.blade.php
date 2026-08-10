@@ -172,7 +172,17 @@
                             <div class="relative shrink-0">
                                 <div class="w-8 h-8 rounded-full text-white text-xs font-semibold flex items-center justify-center transition-transform duration-150 hover:scale-110"
                                      style="background: {{ $user->is_active ? '#2F8F86' : '#94a3b8' }}">
-                                    {{ strtoupper(substr($user->username, 0, 1)) }}
+                                    {{-- {{ strtoupper(substr($user->username, 0, 1)) }} --}}
+                                    @if($user && $user->profile_picture)
+                                    <img src="{{ asset('storage/' . $user->profile_picture) }}" 
+                                        alt="{{ $user->username }}"
+                                        class="user-avatar"
+                                        width="40" height="40">
+                                    @else
+                                        <span class="user-avatar">
+                                            {{ $user ? strtoupper(substr($user->username, 0, 2)) : 'GU' }}
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
 

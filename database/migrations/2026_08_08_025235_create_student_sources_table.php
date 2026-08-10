@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('genders', function (Blueprint $table) {
-            $table->id('gender_id');
-            $table->string('gender_name', 20);
-            $table->char('gender_code', 1)->nullable();
-            $table->boolean('is_active')->default(true);
+        Schema::create('student_sources', function (Blueprint $table) {
+            $table->id('student_source_id');
+            $table->string('student_source_name');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('genders');
+        Schema::dropIfExists('student_sources');
     }
 };
