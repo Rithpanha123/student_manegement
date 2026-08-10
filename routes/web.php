@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     // Staffs
     Route::view('/staffs', 'staffs.index')->name('staffs');
 
+    //Plate
+    Route::view('/plates', 'plates.index')->name('plates');
+    
     // Invoices
     Route::view('/invoices', 'invoices.index')->name('invoices');
 

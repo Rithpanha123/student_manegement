@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @extends('layouts.app')
 
 @section('content')
@@ -47,7 +48,7 @@
         }
     </style>
 
-    <div class="font-khmer bg-slate-50 min-h-screen">
+    <div class="font-khmer bg-slate-50 min-h-screen max-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
     <div class="">
 
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm animate-fade-up">

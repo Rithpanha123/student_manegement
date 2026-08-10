@@ -156,7 +156,7 @@
 
         <p class="helper">
             New here?
-            <a href="#">
+            <a href="{{ route('admin.users.create') }}">
                 Request an account
             </a>
         </p>

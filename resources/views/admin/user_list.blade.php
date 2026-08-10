@@ -58,7 +58,7 @@
 <div class="">
 
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 animate-fade-up">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 animate-fade-up ">
         <div>
             <h1 class="text-2xl font-semibold tracking-tight text-slate-900">Users</h1>
             <p class="text-sm text-slate-500 mt-1">Manage accounts, roles, and access.</p>
@@ -78,10 +78,10 @@
     </div>
 
     <!-- Card -->
-    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden animate-fade-up" style="animation-delay: 80ms">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden animate-fade-up  " style="animation-delay: 80ms">
 
         @if($users->count() > 0)
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto ">
                 <table class="min-w-full text-sm">
                     <thead>
                         <tr class="border-b border-slate-200">

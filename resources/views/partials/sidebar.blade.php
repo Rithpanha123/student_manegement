@@ -2,7 +2,7 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-logo">
-        <img src="assets/logo.png" alt="University seal" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="/assets/logo.png" alt="University seal" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="brand-logo-fallback"><i class="fas fa-university"></i></div>
       </div>
       <div class="brand-text">
@@ -34,7 +34,7 @@
             <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
           </a>
           <div class="dropdown-content" id="Class-dropdown">
-            <a href="#" class="dropdown-item"><i class="fas fa-plus-circle dropdown-icon"></i><span>បង្កើតថ្នាក់</span></a>
+            <a href="{{ route('classes') }}" class="dropdown-item"><i class="fas fa-plus-circle dropdown-icon"></i><span>បង្កើតថ្នាក់</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-list dropdown-icon"></i><span>ថ្នាក់ទាំងអស់</span></a>
           </div>
         </div>
@@ -63,6 +63,7 @@
             <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
           </a>
           <div class="dropdown-content" id="Staff-dropdown">
+            <a href="{{ route('staffs') }}" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីបុគ្គលិក</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-users dropdown-icon"></i><span>បញ្ជីសិស្សរួម</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-calendar-alt dropdown-icon"></i><span>បញ្ជីតាមឆ្នាំសិក្សា</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-user-slash dropdown-icon"></i><span>បញ្ចីសិស្សឈប់</span></a>
@@ -104,14 +105,14 @@
         <div class="nav-group-label">Shipping</div>
 
         <div class="nav-dropdown menu-item" data-delay="8">
-          <a class="nav-link nav-toggle" href="#" data-target="transport-dropdown">
+          <a class="nav-link nav-toggle" href="#" data-target="plates-dropdown">
             <i class="fas fa-truck"></i>
             <span>ខ្សែដឹកជញ្ជូន</span>
             <span class="nav-badge">3</span>
             <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
           </a>
-          <div class="dropdown-content" id="transport-dropdown">
-            <a href="#" class="dropdown-item"><i class="fas fa-plus dropdown-icon"></i><span>បញ្ចូលខ្សែដឹកជញ្ជូនថ្មី</span></a>
+          <div class="dropdown-content" id="plates-dropdown">
+            <a href="{{ route('plates') }}" class="dropdown-item"><i class="fas fa-plus dropdown-icon"></i><span>បញ្ចូលខ្សែដឹកជញ្ជូនថ្មី</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-list dropdown-icon"></i><span>បញ្ចីខ្សែដឹកជញ្ជូន</span></a>
             <a href="#" class="dropdown-item"><i class="fas fa-calendar dropdown-icon"></i><span>បញ្ចីតាមឆ្នាំ</span></a>
           </div>
