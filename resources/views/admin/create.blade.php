@@ -139,7 +139,7 @@
                             class="w-full px-3 py-2 text-sm bg-white border border-slate-200 rounded-lg outline-none transition-all duration-150 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-300">
                         <option value="">-- Select gender --</option>
                         @foreach ($genders as $gender)
-                            <option value="{{ $gender->id }}" {{ old('gender_id') == $gender->id ? 'selected' : '' }}>
+                            <option value="{{ $gender->gender_id }}" {{ old('gender_id') == $gender->gender_id ? 'selected' : '' }}>
                                 {{ $gender->gender_name }}
                             </option>
                         @endforeach

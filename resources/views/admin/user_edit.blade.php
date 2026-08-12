@@ -82,7 +82,7 @@
                     <select name="gender_id" class="w-full px-3 py-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-300 transition-all">
                         <option value="">-- Select gender --</option>
                         @foreach ($genders as $gender)
-                            <option value="{{ $gender->id }}" {{ old('gender_id', $user->gender_id) == $gender->id ? 'selected' : '' }}>
+                            <option value="{{ $gender->gender_id }}" {{ old('gender_id', $user->gender_id) == $gender->gender_id ? 'selected' : '' }}>
                                 {{ $gender->gender_name }}
                             </option>
                         @endforeach

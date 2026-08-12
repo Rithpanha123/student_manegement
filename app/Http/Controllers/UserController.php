@@ -94,7 +94,7 @@ class UserController extends Controller
             'email'           => 'required|email|unique:users,email',
             'password'        => $this->passwordRule(true),
             'role_id'         => 'required|exists:roles,role_id',
-            'gender_id'       => 'nullable|exists:genders,id',
+            'gender_id'       => 'nullable|exists:genders,gender_id',
             'is_active'       => 'nullable|boolean',
             'profile_picture' => 'nullable|image|max:2048',
         ], $this->validationMessages());
@@ -109,7 +109,7 @@ class UserController extends Controller
             'email'           => $validated['email'],
             'password_hash'   => Hash::make($validated['password']),
             'role_id'         => $validated['role_id'],
-            'gender_id'       => $validated['gender_id'] ?? null,
+            'gender_id'       => $validated['gender_id'],
             'is_active'       => $request->boolean('is_active'),
             'last_login'      => null,
             'profile_picture' => $path,
@@ -133,7 +133,7 @@ class UserController extends Controller
             'email'           => 'required|email|unique:users,email,' . $user->user_id . ',user_id',
             'password'        => $this->passwordRule(false), // password មិនចាំបាច់ noh ពេល update ទេ
             'role_id'         => 'required|exists:roles,role_id',
-            'gender_id'       => 'nullable|exists:genders,id',
+            'gender_id'       => 'nullable|exists:genders,gender_id',
             'is_active'       => 'nullable|boolean',
             'profile_picture' => 'nullable|image|max:2048',
         ], $this->validationMessages());
@@ -142,7 +142,7 @@ class UserController extends Controller
             'username'  => $validated['username'],
             'email'     => $validated['email'],
             'role_id'   => $validated['role_id'],
-            'gender_id' => $validated['gender_id'] ?? null,
+            'gender_id' => $validated['gender_id'],
             'is_active' => $request->boolean('is_active'),
         ];
 

@@ -1,0 +1,5 @@
+CREATE DATABASE university_db;
+
+CREATE SCHEMA IF NOT EXISTS university;
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
